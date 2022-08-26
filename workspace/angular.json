@@ -1,0 +1,8 @@
+{
+  "$schema": "./node_modules/nx/schemas/workspace-schema.json",
+  "version": 2,
+  "projects": {
+    "arztrezepte": "apps/arztrezepte",
+    "arztrezepte-e2e": "apps/arztrezepte-e2e"
+  }
+}
