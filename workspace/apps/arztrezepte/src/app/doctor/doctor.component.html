@@ -1,5 +1,6 @@
 <mat-card class="card" routerLink="patient">
-  <mat-card-title>Rezept ausstellen</mat-card-title>
+  <mat-card-title class="card-title">
+    <mat-icon>receipt</mat-icon>Rezept ausstellen</mat-card-title>
   <mat-card-content class="center">
     <!-- patient selector -->
     <mat-form-field class="full-width spacer-top" appearance="fill">
@@ -72,8 +73,10 @@
     </section>
 
     <section class="time spacer-top">
-        <mat-checkbox (change)="onLongTermChange($event.checked)">Dauerrezept</mat-checkbox>
-      </section>
+      <mat-checkbox (change)="onLongTermChange($event.checked)"
+        >Dauerrezept</mat-checkbox
+      >
+    </section>
   </mat-card-content>
 
   <mat-card-actions align="end">

@@ -8,6 +8,7 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { Observable } from 'rxjs';
 import { map, startWith, switchMap } from 'rxjs/operators';
@@ -30,6 +31,7 @@ import { RecipeService } from '../shared/recipe.service';
     MatCardModule,
     MatButtonModule,
     MatCheckboxModule,
+    MatIconModule,
   ],
   templateUrl: './doctor.component.html',
   styleUrls: ['./doctor.component.scss'],
