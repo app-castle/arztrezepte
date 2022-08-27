@@ -1,47 +1,58 @@
 <mat-card class="card" routerLink="pharmacy">
   <mat-card-title class="card-title">
-    <mat-icon>local_pharmacy</mat-icon>Rezept einlösen</mat-card-title>
-    <mat-card-content class="center">
-      <!-- selected recipe -->
-      <ng-container *ngIf="recipe$ | async as selectedRecipe">
+    <mat-icon>local_pharmacy</mat-icon>Rezept einlösen</mat-card-title
+  >
+  <mat-card-content class="center">
+    <!-- selected recipe -->
+    <ng-container *ngIf="recipe">
+      <mat-toolbar>
+        <span
+          >{{ recipe.patient.Firstname }} {{ recipe.patient.Lastname }}</span
+        >
+      </mat-toolbar>
+      <span>Geburtstag: {{ recipe.patient.Birthday }}</span>
+      <span>AHV Nr: {{ recipe.patient.AHV }}</span>
+      <span>Karten Nr: {{ recipe.patient.Cardnumber }}</span>
+      <span>Geschlecht: {{ recipe.patient.Gender }}</span>
+      <mat-toolbar>
+        <span>{{ recipe.DoctorName }}</span>
+      </mat-toolbar>
+      <span>Adresse: {{ recipe.DoctorAddress }}</span>
+      <mat-toolbar>
+        <span>{{ recipe.medication.Name }}</span>
+      </mat-toolbar>
+      <span>{{ recipe.medication.Type }}</span>
+      <span>Ausstellungsdatum: {{ recipe.Date }}</span>
 
-        <mat-toolbar>
-          <span>{{selectedRecipe.patient.Firstname}} {{selectedRecipe.patient.Lastname}}</span>
-        </mat-toolbar>
-          <span>Geburtstag: {{selectedRecipe.patient.Birthday}}</span>
-          <span>AHV Nr: {{selectedRecipe.patient.AHV}}</span>
-          <span>Karten Nr: {{selectedRecipe.patient.Cardnumber}}</span>
-          <span>Geschlecht: {{selectedRecipe.patient.Gender}}</span>
-        <mat-toolbar>
-          <span>{{selectedRecipe.DoctorName}}</span>
-        </mat-toolbar>
-          <span>Adresse: {{selectedRecipe.DoctorAddress}}</span>
-        <mat-toolbar>
-          <span>{{selectedRecipe.medication.Name}}</span>
-        </mat-toolbar>       
-          <span>{{selectedRecipe.medication.Type}}</span>
-          <span>Ausstellungsdatum: {{selectedRecipe.Date}}</span>
+      <section class="time spacer-top">
+        <mat-checkbox
+          (click)="$event.preventDefault()"
+          [(ngModel)]="recipe.Morning"
+          >Morgens</mat-checkbox
+        >
+        <mat-checkbox
+          (click)="$event.preventDefault()"
+          [(ngModel)]="recipe.Lunch"
+          >Mittags</mat-checkbox
+        >
+        <mat-checkbox
+          (click)="$event.preventDefault()"
+          [(ngModel)]="recipe.Evening"
+          >Abends</mat-checkbox
+        >
+      </section>
 
-          <section class="time spacer-top">
-            <mat-checkbox (click)="$event.preventDefault()" [(ngModel)]="selectedRecipe.Morning">Morgens</mat-checkbox>
-            <mat-checkbox (click)="$event.preventDefault()" [(ngModel)]="selectedRecipe.Lunch">Mittags</mat-checkbox>
-            <mat-checkbox (click)="$event.preventDefault()" [(ngModel)]="selectedRecipe.Evening">Abends</mat-checkbox>
-          </section>
+      <span>Firma: {{ recipe.medication.Company }}</span>
+      <span>Gültig bis: {{ recipe.ValidTo }}</span>
+      <mat-card-actions align="end" *ngIf="!recipe.Used">
+        <mat-icon>task</mat-icon>
+        <button mat-button (click)="onSave()">EINLÖSEN</button>
+      </mat-card-actions>
 
-          <span>Firma: {{selectedRecipe.medication.Company}}</span>
-          <span>Gültig bis: {{selectedRecipe.ValidTo}}</span>
-          <mat-card-actions align="end" *ngIf="!selectedRecipe.Used">
-            <mat-icon>task</mat-icon>
-            <button mat-button (click)="onSave(selectedRecipe)">EINLÖSEN</button>
-          </mat-card-actions>
-
-          <mat-card-actions align="end" *ngIf="selectedRecipe.Used">
-           <mat-icon>task</mat-icon>
-            <span>Bereits einglöst</span>
-          </mat-card-actions>
-      </ng-container>
-
-    </mat-card-content>
-
-  </mat-card>
-  
+      <mat-card-actions align="end" *ngIf="recipe.Used">
+        <mat-icon>task</mat-icon>
+        <span>Bereits einglöst</span>
+      </mat-card-actions>
+    </ng-container>
+  </mat-card-content>
+</mat-card>
