@@ -1,8 +1,87 @@
-
 <ng-container *ngIf="recipe$ | async as recipe">
-  <h1>{{recipe.medication.Name}}</h1>
+  <section>
+    <h1>{{ recipe.medication.Name }}</h1>
 
-  <qrcode qrdata="https://appcastle.ch" [width]="1000"></qrcode>
+    <qrcode qrdata="https://appcastle.ch" [width]="1000"></qrcode>
+  </section>
+
+  <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>Gültigkeit</mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <dl>
+      <dt>Ausstellungsdatum</dt>
+      <dd>{{ recipe.Date }}</dd>
+
+      <dt>Gültig bis</dt>
+      <dd>
+        <span
+          [matBadge]="isValid(recipe.ValidTo) ? '✓' : 'X'"
+          [matBadgeColor]="isValid(recipe.ValidTo) ? 'primary' : 'warn'"
+        >
+          {{ recipe.ValidTo }}
+        </span>
+      </dd>
+    </dl>
+
+    <button mat-raised-button *ngIf="!isValid(recipe.ValidTo)">
+      Verlängern lassen
+    </button>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>Medikament</mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <dl>
+      <dt>Typ</dt>
+      <dd>{{ recipe.medication.Type }}</dd>
+
+      <dt>Nummer / Hersteller</dt>
+      <dd>{{ recipe.medication.Number }} / {{ recipe.medication.Company }}</dd>
+    </dl>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>Dosierung</mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div class="dosis">
+      <label>
+        <mat-checkbox type="checkbox" [checked]="recipe.Morning"></mat-checkbox>
+        Morgen
+      </label>
+      <label>
+        <mat-checkbox type="checkbox" [checked]="recipe.Lunch"></mat-checkbox>
+        Mittag
+      </label>
+      <label>
+        <mat-checkbox type="checkbox" [checked]="recipe.Evening"></mat-checkbox>
+        Abend
+      </label>
+    </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>Patient</mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <dl>
+      <dt>Name</dt>
+      <dd>{{ recipe.patient.Firstname }} {{ recipe.patient.Lastname }}</dd>
+
+      <dt>Geburtsdatum</dt>
+      <dd>{{ recipe.patient.Birthday }}</dd>
+
+      <dt>AHV Nummer</dt>
+      <dd>{{ recipe.patient.AHV }}</dd>
+
+      <dt>Karten Nummer</dt>
+      <dd>{{ recipe.patient.Cardnumber }}</dd>
+    </dl>
+  </mat-expansion-panel>
 </ng-container>
-
-{{recipe$ | async | json}}

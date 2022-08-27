@@ -1,4 +1,31 @@
 :host {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
   padding: 1rem;
+}
+
+dl {
+  dd + dt {
+    margin-top: 0.5rem;
+  }
+
+  dt {
+    font-weight: bold;
+    color: #333;
+  }
+
+  dd {
+    margin: 0;
+  }
+}
+
+.mat-badge-content {
+  top: -4px !important;
+  right: -30px !important;
+}
+
+.dosis {
+  display: flex;
+  justify-content: space-between;
 }
