@@ -45,6 +45,7 @@ export class DoctorComponent {
     Evening: false,
     Lunch: false,
     Morning: false,
+    Used: false,
   } as any;
 
   public patients$: Observable<Patient[]>;
