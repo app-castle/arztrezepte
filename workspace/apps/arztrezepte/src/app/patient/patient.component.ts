@@ -1,5 +1,8 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Patient } from './patient.models';
+import { PatientService } from './patient.service';
 
 @Component({
   selector: 'bh-patient',
@@ -9,8 +12,10 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./patient.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PatientComponent implements OnInit {
-  constructor() {}
+export class PatientComponent {
+  public patients$: Observable<Patient[]>;
 
-  ngOnInit(): void {}
+  constructor(private patientService: PatientService) {
+    this.patients$ = this.patientService.getAll();
+  }
 }

@@ -1,1 +1,3 @@
-<p>patient works!</p>
+<ul>
+  <li *ngFor="let patient of patients$ | async">{{patient.Firstname}} {{patient.Lastname}}</li>
+</ul>
