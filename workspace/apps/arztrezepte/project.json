@@ -17,13 +17,16 @@
         "inlineStyleLanguage": "scss",
         "assets": [
           "apps/arztrezepte/src/favicon.ico",
-          "apps/arztrezepte/src/assets"
+          "apps/arztrezepte/src/assets",
+          "apps/arztrezepte/src/manifest.webmanifest"
         ],
         "styles": [
           "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
           "apps/arztrezepte/src/styles.scss"
         ],
-        "scripts": []
+        "scripts": [],
+        "serviceWorker": true,
+        "ngswConfigPath": "apps/arztrezepte/ngsw-config.json"
       },
       "configurations": {
         "production": {

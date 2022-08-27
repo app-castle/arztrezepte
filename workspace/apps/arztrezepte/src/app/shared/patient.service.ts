@@ -18,18 +18,32 @@ export class PatientService {
     return this.ref.snapshotChanges().pipe(
       map((changes) =>
         changes.map((change) => ({
-          id: change.payload.doc.id,
           ...change.payload.doc.data(),
+          id: change.payload.doc.id,
         }))
       )
     );
   }
 
-  create(payload: Patient) {
-    return this.ref.add({ ...payload });
+  get(id: string) {
+    return this.ref
+      .doc(id)
+      .get()
+      .pipe(
+        map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }))
+      );
   }
 
-  update(id: string, payload: Patient) {
+  create(payload: Partial<Patient>) {
+    delete payload.id;
+    return this.ref.add({ ...payload } as Patient);
+  }
+
+  update(id: string, payload: Partial<Patient>) {
+    delete payload.id;
     return this.ref.doc(id).update(payload);
   }
 
