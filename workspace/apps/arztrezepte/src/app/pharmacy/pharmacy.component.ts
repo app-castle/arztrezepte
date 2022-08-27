@@ -9,6 +9,8 @@ import { Patient } from '../shared/patient.models';
 import { PatientService } from '../shared/patient.service';
 import { Recipe } from '../shared/recipe.models';
 import { RecipeService } from '../shared/recipe.service';
+import { Medication } from '../shared/medication.models';
+import { MedicationService } from '../shared/medication.service';
 
 @Component({
   selector: 'bh-pharmacy',
@@ -25,13 +27,19 @@ import { RecipeService } from '../shared/recipe.service';
 })
 export class PharmacyComponent {
   public patients$: Observable<Patient[]>;
+  public medications$: Observable<Medication[]>;
   public recipes$: Observable<Recipe[]>;
   public filteredRecipes$: Observable<Recipe[]>;
   public recipeInput = new FormControl('');
 
-  constructor(public patientService: PatientService, public recipeService: RecipeService) {
+  constructor(
+    public patientService: PatientService, 
+    public recipeService: RecipeService,
+    public medicationService: MedicationService)
+  {
     this.patients$ = this.patientService.getAll();
     this.recipes$ = this.recipeService.getAll();
+    this.medications$ = this.medicationService.getAll();
     this.filteredRecipes$ = this.initAutocomplete();
   }
 
