@@ -6,21 +6,20 @@ import { PatientListComponent } from './patient-list/patient-list.component';
 
 export const PATIENT_ROUTING: Routes = [
   {
-    path: '',
+    path: ':id',
     component: PatientComponent,
+    resolve: {
+      patient: PatientResolver,
+    },
     children: [
       {
-        path: '',
-        pathMatch: 'full',
-        component: PatientListComponent,
-      },
-      {
-        path: ':id/recepies',
+        path: 'recepies',
         component: RecipeListComponent,
-        resolve: {
-          patient: PatientResolver,
-        },
       },
     ],
+  },
+  {
+    path: '**',
+    component: PatientListComponent,
   },
 ];
