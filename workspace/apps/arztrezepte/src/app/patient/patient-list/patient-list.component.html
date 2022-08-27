@@ -1,6 +1,6 @@
 <ul>
   <li *ngFor="let patient of patients$ | async">
-    <a href="patient/{{patient.id}}/recepies">
+    <a href="patient/{{patient.id}}">
       {{patient.Firstname}} {{patient.Lastname}}
     </a>
   </li>

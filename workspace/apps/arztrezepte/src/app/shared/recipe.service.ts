@@ -8,6 +8,8 @@ import { switchMap } from 'rxjs/operators';
 import { MedicationService } from './medication.service';
 import { PatientService } from './patient.service';
 import { Recipe } from './recipe.models';
+import { Medication } from './medication.models';
+import { Patient } from './patient.models';
 
 @Injectable({ providedIn: 'root' })
 export class RecipeService {
@@ -77,8 +79,10 @@ export class RecipeService {
     return this.ref.add({ ...payload } as Recipe);
   }
 
-  update(id: string, payload: Partial<Recipe>) {
+  update(id: string, payload: Partial<Recipe & { medication: Medication, patient: Patient }>) {
     delete payload.id;
+    delete payload.patient;
+    delete payload.medication;
     return this.ref.doc(id).update(payload);
   }
 

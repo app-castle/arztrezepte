@@ -1,16 +1,22 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatInputModule } from '@angular/material/input';
+import { ActivatedRoute } from '@angular/router';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  MatAutocompleteModule,
+  MatAutocompleteSelectedEvent,
+} from '@angular/material/autocomplete';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { Observable } from 'rxjs';
-import { map, startWith, switchMap } from 'rxjs/operators';
-import { Patient } from '../shared/patient.models';
-import { PatientService } from '../shared/patient.service';
+import { map, filter } from 'rxjs/operators';
 import { Recipe } from '../shared/recipe.models';
-import { RecipeService } from '../shared/recipe.service';
 import { Medication } from '../shared/medication.models';
-import { MedicationService } from '../shared/medication.service';
+import { Patient } from '../shared/patient.models';
+import { RecipeService } from '../shared/recipe.service';
 
 @Component({
   selector: 'bh-pharmacy',
@@ -18,50 +24,37 @@ import { MedicationService } from '../shared/medication.service';
   imports: [
     CommonModule,
     MatAutocompleteModule,
-    MatInputModule,
+    MatToolbarModule,
     ReactiveFormsModule,
+    FormsModule,
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCheckboxModule,
   ],
   templateUrl: './pharmacy.component.html',
   styleUrls: ['./pharmacy.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PharmacyComponent {
-  public patients$: Observable<Patient[]>;
-  public medications$: Observable<Medication[]>;
-  public recipes$: Observable<Recipe[]>;
-  public filteredRecipes$: Observable<Recipe[]>;
-  public recipeInput = new FormControl('');
+  
+  public recipe$: Observable<Recipe & { medication: Medication, patient: Patient }>;
 
   constructor(
-    public patientService: PatientService, 
-    public recipeService: RecipeService,
-    public medicationService: MedicationService)
+    route: ActivatedRoute,
+    public recipeService: RecipeService)
   {
-    this.patients$ = this.patientService.getAll();
-    this.recipes$ = this.recipeService.getAll();
-    this.medications$ = this.medicationService.getAll();
-    this.filteredRecipes$ = this.initAutocomplete();
-  }
+    //this.recipe$ = this.recipeService.getCompleteRecipe("uEtJdGasXsim9ByzvL5T");
 
-private initAutocomplete() {
-    return this.recipeInput.valueChanges.pipe(
-      startWith(''),
-      switchMap((textValue) =>
-        textValue ? this.filterRecipes(textValue) : this.recipes$
-      )
+    this.recipe$ = route.data.pipe(
+      map((data) => data['recipe']),
+      filter((recipe) => !!recipe)
     );
   }
-  private filterRecipes(value: string): Observable<Recipe[]> {
-    const filterValue = value.toLowerCase();
 
-    return this.recipes$.pipe(
-      map((p) =>
-        p.filter(
-          (p) =>
-            p.DoctorName.toLowerCase().includes(filterValue) ||
-            p.Date.toLowerCase().includes(filterValue)
-        )
-      )
-    );
+  public async onSave(recipe: Recipe & { medication: Medication, patient: Patient }): Promise<void> {
+    recipe.Used=true;
+    await this.recipeService.update(recipe.id, recipe);
   }
+
 }

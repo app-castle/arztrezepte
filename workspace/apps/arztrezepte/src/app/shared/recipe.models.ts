@@ -7,7 +7,7 @@ export interface Recipe {
   MedicationId: string;
   ValidTo: string;
   Count: string;
-  Used: string;
+  Used: boolean;
   Morning: boolean;
   Lunch: boolean;
   Evening: boolean;

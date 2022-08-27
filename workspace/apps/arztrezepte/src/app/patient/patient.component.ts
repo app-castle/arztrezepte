@@ -1,25 +1,37 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { Patient } from '../shared/patient.models';
+import { PatientToolbarService } from './patient-toolbar.service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'bh-patient',
   standalone: true,
-  imports: [CommonModule, MatToolbarModule, RouterModule],
+  imports: [CommonModule, MatToolbarModule, RouterModule, MatIconModule],
   templateUrl: './patient.component.html',
   styleUrls: ['./patient.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PatientComponent {
   public patient$: Observable<Patient>;
-  constructor(route: ActivatedRoute) {
+  constructor(
+    route: ActivatedRoute,
+    private location: Location,
+    public toolbarService: PatientToolbarService
+  ) {
     this.patient$ = route.data.pipe(
       map((data) => data['patient']),
       filter((patient) => patient)
     );
+
+    this.toolbarService.hasBacklink$.subscribe((x) => console.log(x));
+  }
+
+  public navigateBack() {
+    this.location.back();
   }
 }
