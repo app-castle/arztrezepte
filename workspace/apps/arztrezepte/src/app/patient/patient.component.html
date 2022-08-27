@@ -1,5 +1,5 @@
 <mat-toolbar>
-  <span>Patient</span>
+  <span *ngIf="patient$ | async as patient">{{patient.Firstname}} {{patient.Lastname}}</span>
 </mat-toolbar>
 
 <router-outlet></router-outlet>

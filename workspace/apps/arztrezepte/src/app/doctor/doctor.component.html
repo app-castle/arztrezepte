@@ -2,16 +2,16 @@
   <mat-card-title>Rezept ausstellen</mat-card-title>
   <mat-card-content class="center">
     <!-- patient selector -->
-    <mat-form-field appearance="fill">
+    <mat-form-field class="full-width spacer-top" appearance="fill">
       <mat-label>Patient</mat-label>
       <input
         matInput
-        aria-label="State"
-        [matAutocomplete]="auto"
+        aria-label="Patient"
+        [matAutocomplete]="autoPatient"
         [formControl]="patientInput"
       />
       <mat-autocomplete
-        #auto="matAutocomplete"
+        #autoPatient="matAutocomplete"
         (optionSelected)="onPatientSelected($event)"
         [displayWith]="patientDisplayFn"
       >
@@ -20,15 +20,63 @@
           [value]="patient"
         >
           <span>{{ patient.Firstname }} </span>
-          <span>{{ patient.Firstname }} </span> |
+          <span>{{ patient.Lastname }} </span> |
           <small>{{ patient.Birthday }}</small>
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
     <!-- selected patient -->
     <ng-container *ngIf="selectedPatient">
-        <div>{{selectedPatient.Birthday}}</div>
+      <div>
+        <span>{{ selectedPatient.Birthday }} - </span>
+        <span>{{ selectedPatient.Gender }} - </span>
+        <span>{{ selectedPatient.AHV }}</span>
+      </div>
     </ng-container>
 
+    <!-- medication selector -->
+    <mat-form-field class="full-width spacer-top" appearance="fill">
+      <mat-label>Medikament</mat-label>
+      <input
+        matInput
+        aria-label="Medikament"
+        [matAutocomplete]="autoMedi"
+        [formControl]="medicationInput"
+      />
+      <mat-autocomplete
+        #autoMedi="matAutocomplete"
+        (optionSelected)="onMedicationSelected($event)"
+        [displayWith]="medicationDisplayFn"
+      >
+        <mat-option
+          *ngFor="let med of filteredMedications$ | async"
+          [value]="med"
+        >
+          <span>{{ med.Name }} </span> |
+          <small>{{ med.Company }}</small>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <!-- selected medication -->
+    <ng-container *ngIf="selectedMedication">
+      <div>
+        <span>{{ selectedMedication.Number }} - </span>
+        <span>{{ selectedMedication.Company }}</span>
+      </div>
+    </ng-container>
+
+    <section class="time spacer-top">
+      <mat-checkbox [(ngModel)]="recipe.Morning">Morgens</mat-checkbox>
+      <mat-checkbox [(ngModel)]="recipe.Lunch">Mittags</mat-checkbox>
+      <mat-checkbox [(ngModel)]="recipe.Evening">Abends</mat-checkbox>
+    </section>
+
+    <section class="time spacer-top">
+        <mat-checkbox (change)="onLongTermChange($event.checked)">Dauerrezept</mat-checkbox>
+      </section>
   </mat-card-content>
+
+  <mat-card-actions align="end">
+    <button mat-button (click)="onSave()">AUSSTELLEN</button>
+  </mat-card-actions>
 </mat-card>

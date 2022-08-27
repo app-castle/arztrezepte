@@ -7,4 +7,7 @@ export interface Recipe {
   ValidTo: string;
   Count: string;
   Used: string;
+  Morning: boolean;
+  Lunch: boolean;
+  Evening: boolean;
 }
