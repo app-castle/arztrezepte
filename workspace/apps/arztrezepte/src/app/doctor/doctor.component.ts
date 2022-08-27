@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   MatAutocompleteModule,
   MatAutocompleteSelectedEvent,
 } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 import { Observable } from 'rxjs';
 import { map, startWith, switchMap } from 'rxjs/operators';
@@ -15,6 +16,7 @@ import { MedicationService } from '../shared/medication.service';
 import { Patient } from '../shared/patient.models';
 import { PatientService } from '../shared/patient.service';
 import { Recipe } from '../shared/recipe.models';
+import { RecipeService } from '../shared/recipe.service';
 
 @Component({
   selector: 'bh-doctor',
@@ -24,15 +26,23 @@ import { Recipe } from '../shared/recipe.models';
     MatAutocompleteModule,
     MatInputModule,
     ReactiveFormsModule,
+    FormsModule,
     MatCardModule,
     MatButtonModule,
+    MatCheckboxModule,
   ],
   templateUrl: './doctor.component.html',
   styleUrls: ['./doctor.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DoctorComponent {
-  public recipe: Recipe = {} as any;
+  public recipe: Recipe = {
+    Date: new Date().toISOString(),
+    DoctorName: 'Dr. Bernard Häcker',
+    Evening: false,
+    Lunch: false,
+    Morning: false,
+  } as any;
 
   public patients$: Observable<Patient[]>;
   public filteredPatients$: Observable<Patient[]>;
@@ -44,7 +54,11 @@ export class DoctorComponent {
   public medicationInput = new FormControl('');
   public selectedMedication: Medication | null = null;
 
-  constructor(patientService: PatientService, medicationService: MedicationService) {
+  constructor(
+    patientService: PatientService,
+    medicationService: MedicationService,
+    private recipeService: RecipeService
+  ) {
     this.patients$ = patientService.getAll();
     this.filteredPatients$ = this.initPatientsAutocomplete();
 
@@ -54,6 +68,8 @@ export class DoctorComponent {
 
   public onPatientSelected(args: MatAutocompleteSelectedEvent) {
     this.selectedPatient = args?.option?.value;
+
+    this.recipe.PatientId = this.selectedPatient?.id ?? '';
   }
 
   public patientDisplayFn(p: Patient): string {
@@ -85,6 +101,8 @@ export class DoctorComponent {
 
   public onMedicationSelected(args: MatAutocompleteSelectedEvent) {
     this.selectedMedication = args?.option?.value;
+
+    this.recipe.MedicationId = this.selectedMedication?.id ?? '';
   }
   public medicationDisplayFn(p: Medication): string {
     return p ? `${p.Name}` : '';
@@ -111,5 +129,17 @@ export class DoctorComponent {
         )
       )
     );
+  }
+
+  public onLongTermChange(val: boolean): void {
+    const validTo = new Date();
+    validTo.setFullYear(validTo.getFullYear() + 1);
+    val
+      ? (this.recipe.ValidTo = validTo.toISOString())
+      : (this.recipe.ValidTo = '');
+  }
+
+  public async onSave(): Promise<void> {
+    await this.recipeService.create(this.recipe);
   }
 }

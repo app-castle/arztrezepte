@@ -65,10 +65,18 @@
       </div>
     </ng-container>
 
-    <section>
-        <!-- <mat-checkbox class="example-margin" [(ngModel)]="recipe.">Checked</mat-checkbox>
-        <mat-checkbox class="example-margin" [(ngModel)]="indeterminate">Indeterminate</mat-checkbox> -->
-      </section>
+    <section class="time spacer-top">
+      <mat-checkbox [(ngModel)]="recipe.Morning">Morgens</mat-checkbox>
+      <mat-checkbox [(ngModel)]="recipe.Lunch">Mittags</mat-checkbox>
+      <mat-checkbox [(ngModel)]="recipe.Evening">Abends</mat-checkbox>
+    </section>
 
+    <section class="time spacer-top">
+        <mat-checkbox (change)="onLongTermChange($event.checked)">Dauerrezept</mat-checkbox>
+      </section>
   </mat-card-content>
+
+  <mat-card-actions align="end">
+    <button mat-button (click)="onSave()">AUSSTELLEN</button>
+  </mat-card-actions>
 </mat-card>
