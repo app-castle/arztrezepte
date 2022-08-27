@@ -29,9 +29,9 @@ bootstrapApplication(AppComponent, {
         },
         {
           path: 'patient',
-          loadComponent: () =>
-            import('./app/patient/patient.component').then(
-              (mod) => mod.PatientComponent
+          loadChildren: () =>
+            import('./app/patient/patient.routes').then(
+              (mod) => mod.PATIENT_ROUTING
             ),
         },
         {
@@ -43,8 +43,7 @@ bootstrapApplication(AppComponent, {
         },
       ]),
       AngularFireModule.initializeApp(environment.firebase),
-      AngularFirestoreModule,
-
+      AngularFirestoreModule
     ),
   ],
 }).catch((err) => console.error(err));

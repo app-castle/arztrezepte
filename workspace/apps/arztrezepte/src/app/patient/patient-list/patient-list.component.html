@@ -1,0 +1,7 @@
+<ul>
+  <li *ngFor="let patient of patients$ | async">
+    <a href="patient/{{patient.id}}/recepies">
+      {{patient.Firstname}} {{patient.Lastname}}
+    </a>
+  </li>
+</ul>

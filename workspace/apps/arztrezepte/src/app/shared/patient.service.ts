@@ -30,10 +30,13 @@ export class PatientService {
       .doc(id)
       .get()
       .pipe(
-        map((doc) => ({
-          ...doc.data(),
-          id: doc.id,
-        }))
+        map(
+          (doc) =>
+            ({
+              ...doc.data(),
+              id: doc.id,
+            } as Patient)
+        )
       );
   }
 
