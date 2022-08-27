@@ -4,7 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { ActivatedRoute } from '@angular/router';
 import { map, Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { filter, switchMap } from 'rxjs/operators';
 import { Medication } from '../../shared/medication.models';
 import { Patient } from '../../shared/patient.models';
 import { RecipeCardComponent } from '../../shared/recipe-card/recipe-card.component';
@@ -26,8 +26,9 @@ export class RecipeListComponent {
     private route: ActivatedRoute,
     private recipeService: RecipeService
   ) {
-    this.recipes$ = this.route.data.pipe(
+    this.recipes$ = (this.route.parent as ActivatedRoute).data.pipe(
       map((data) => data['patient'] as Patient),
+      filter((patient) => !!patient),
       switchMap((patient) => this.recipeService.getAllOfPatient(patient.id))
     );
   }
