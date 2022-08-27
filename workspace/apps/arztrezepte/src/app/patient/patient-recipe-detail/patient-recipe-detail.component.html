@@ -51,15 +51,27 @@
 
     <div class="dosis">
       <label>
-        <mat-checkbox type="checkbox" [checked]="recipe.Morning"></mat-checkbox>
+        <mat-checkbox
+          type="checkbox"
+          [checked]="recipe.Morning"
+          disabled
+        ></mat-checkbox>
         Morgen
       </label>
       <label>
-        <mat-checkbox type="checkbox" [checked]="recipe.Lunch"></mat-checkbox>
+        <mat-checkbox
+          type="checkbox"
+          [checked]="recipe.Lunch"
+          disabled
+        ></mat-checkbox>
         Mittag
       </label>
       <label>
-        <mat-checkbox type="checkbox" [checked]="recipe.Evening"></mat-checkbox>
+        <mat-checkbox
+          type="checkbox"
+          [checked]="recipe.Evening"
+          disabled
+        ></mat-checkbox>
         Abend
       </label>
     </div>
