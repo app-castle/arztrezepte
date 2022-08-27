@@ -7,11 +7,20 @@ import { filter, map } from 'rxjs/operators';
 import { Patient } from '../shared/patient.models';
 import { PatientToolbarService } from './patient-toolbar.service';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
 
 @Component({
   selector: 'bh-patient',
   standalone: true,
-  imports: [CommonModule, MatToolbarModule, RouterModule, MatIconModule],
+  imports: [
+    CommonModule,
+    MatToolbarModule,
+    RouterModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatListModule,
+  ],
   templateUrl: './patient.component.html',
   styleUrls: ['./patient.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
