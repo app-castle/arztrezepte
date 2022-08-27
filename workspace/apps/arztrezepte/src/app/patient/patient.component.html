@@ -1,4 +1,4 @@
-<mat-toolbar [class.has-backlink]="toolbarService.hasBacklink$ | async">
+<mat-toolbar color="primary" [class.has-backlink]="toolbarService.hasBacklink$ | async">
   <a class="backlink" *ngIf="toolbarService.hasBacklink$ | async" (click)="navigateBack()">
     <mat-icon fontIcon="arrow_back_ios"></mat-icon>
   </a>
