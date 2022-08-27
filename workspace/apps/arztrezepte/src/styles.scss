@@ -1,4 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 
+$icon-xl: 64px;
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.icon-l {
+    font-size: $icon-xl;
+    line-height: $icon-xl;
+    height: $icon-xl !important;
+    width: $icon-xl !important;
+}

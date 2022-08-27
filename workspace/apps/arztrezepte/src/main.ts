@@ -6,6 +6,7 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 
 import { environment } from './environments/environment';
+import { HomeComponent } from './app/home/home.component';
 
 if (environment.production) {
   enableProdMode();
@@ -15,6 +16,7 @@ bootstrapApplication(AppComponent, {
   providers: [
     importProvidersFrom(
       RouterModule.forRoot([
+        {path: '', component: HomeComponent},
         {
           path: 'doctor',
           loadComponent: () =>
@@ -30,7 +32,7 @@ bootstrapApplication(AppComponent, {
             ),
         },
         {
-          path: 'patient',
+          path: 'pharmacy',
           loadComponent: () =>
             import('./app/pharmacy/pharmacy.component').then(
               (mod) => mod.PharmacyComponent
