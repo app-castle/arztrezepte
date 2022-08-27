@@ -4,17 +4,17 @@ import {
   AngularFirestore,
 } from '@angular/fire/compat/firestore';
 import { map, Observable } from 'rxjs';
-import { Patient } from './patient.models';
+import { Medication } from './medication.models';
 
 @Injectable({ providedIn: 'root' })
-export class PatientService {
-  private ref: AngularFirestoreCollection<Patient>;
+export class MedicationService {
+  private ref: AngularFirestoreCollection<Medication>;
 
   constructor(afs: AngularFirestore) {
-    this.ref = afs.collection('Patients');
+    this.ref = afs.collection('Medication');
   }
 
-  getAll(): Observable<Patient[]> {
+  getAll(): Observable<Medication[]> {
     return this.ref.snapshotChanges().pipe(
       map((changes) =>
         changes.map((change) => ({
@@ -30,22 +30,19 @@ export class PatientService {
       .doc(id)
       .get()
       .pipe(
-        map(
-          (doc) =>
-            ({
-              ...doc.data(),
-              id: doc.id,
-            } as Patient)
-        )
+        map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }))
       );
   }
 
-  create(payload: Partial<Patient>) {
+  create(payload: Partial<Medication>) {
     delete payload.id;
-    return this.ref.add({ ...payload } as Patient);
+    return this.ref.add({ ...payload } as Medication);
   }
 
-  update(id: string, payload: Partial<Patient>) {
+  update(id: string, payload: Partial<Medication>) {
     delete payload.id;
     return this.ref.doc(id).update(payload);
   }

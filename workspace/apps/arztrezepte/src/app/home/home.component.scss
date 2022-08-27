@@ -1,12 +1,11 @@
-
 :host {
-  margin: 16px;
+  height: 100%;
+  padding: 16px;
+  box-sizing: border-box;
   display: grid;
+  place-items: center;
   grid-template-columns: 1fr 1fr 1fr;
   column-gap: 16px;
-  width: 100%;
-  justify-items: center;
-  align-self: center;
 }
 
 .example-card {
@@ -14,7 +13,7 @@
   height: 80px;
   &:hover {
     cursor: pointer;
-    color: darkslategray
+    color: darkslategray;
   }
 }
 
