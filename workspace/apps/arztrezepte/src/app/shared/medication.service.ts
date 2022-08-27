@@ -30,10 +30,13 @@ export class MedicationService {
       .doc(id)
       .get()
       .pipe(
-        map((doc) => ({
-          ...doc.data(),
-          id: doc.id,
-        }))
+        map(
+          (doc) =>
+            ({
+              ...doc.data(),
+              id: doc.id,
+            } as Medication)
+        )
       );
   }
 

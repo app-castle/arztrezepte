@@ -30,10 +30,13 @@ export class RecipeService {
       .doc(id)
       .get()
       .pipe(
-        map((doc) => ({
+        map(
+          (doc) =>
+            ({
           ...doc.data(),
           id: doc.id,
-        }))
+            } as Recipe)
+        )
       );
   }
 
