@@ -1,5 +1,7 @@
 <ul>
   <li *ngFor="let recipe of recipes$ | async">
-    <bh-recipe-card [recipe]="recipe"></bh-recipe-card>
+    <a routerLink="../recipe/{{recipe.id}}">
+      <bh-recipe-card [recipe]="recipe"></bh-recipe-card>
+    </a>
   </li>
 </ul>

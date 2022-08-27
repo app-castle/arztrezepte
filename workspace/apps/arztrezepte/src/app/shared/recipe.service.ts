@@ -6,13 +6,15 @@ import {
 import { forkJoin, map, Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { MedicationService } from './medication.service';
+import { PatientService } from './patient.service';
 import { Recipe } from './recipe.models';
 
 @Injectable({ providedIn: 'root' })
 export class RecipeService {
   private ref: AngularFirestoreCollection<Recipe>;
 
-  constructor(afs: AngularFirestore, private medsService: MedicationService) {
+  constructor(afs: AngularFirestore, private medsService: MedicationService,
+    private patsService: PatientService) {
     this.ref = afs.collection('Recipes');
   }
 
@@ -38,6 +40,19 @@ export class RecipeService {
               .pipe(map((med) => ({ ...r, medication: med })))
           )
         )
+      )
+    );
+  }
+  
+  getCompleteRecipe(recipeId: string) {
+    return this.get(recipeId).pipe(
+      switchMap((recipe) => 
+        forkJoin(
+          [
+            this.medsService.get(recipe.MedicationId),
+            this.patsService.get(recipe.PatientId)
+          ]
+        ).pipe(map(([medication, patient]) => ({...recipe, medication, patient})))
       )
     );
   }
