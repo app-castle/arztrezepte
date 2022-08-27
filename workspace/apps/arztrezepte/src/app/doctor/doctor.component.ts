@@ -1,7 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import {
+  MatAutocompleteModule,
+  MatAutocompleteSelectedEvent,
+} from '@angular/material/autocomplete';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { Observable } from 'rxjs';
 import { map, startWith, switchMap } from 'rxjs/operators';
@@ -16,6 +21,8 @@ import { PatientService } from '../shared/patient.service';
     MatAutocompleteModule,
     MatInputModule,
     ReactiveFormsModule,
+    MatCardModule,
+    MatButtonModule,
   ],
   templateUrl: './doctor.component.html',
   styleUrls: ['./doctor.component.scss'],
@@ -25,18 +32,28 @@ export class DoctorComponent {
   public patients$: Observable<Patient[]>;
   public filteredPatients$: Observable<Patient[]>;
   public patientInput = new FormControl('');
+  public selectedPatient: Patient | null = null;
 
   constructor(public service: PatientService) {
     this.patients$ = this.service.getAll();
     this.filteredPatients$ = this.initAutocomplete();
   }
 
+  public onPatientSelected(args: MatAutocompleteSelectedEvent) {
+    this.selectedPatient = args?.option?.value;
+  }
+
+  public patientDisplayFn(p: Patient): string {
+    return p ? `${p.Firstname} ${p.Lastname}` : '';
+  }
+
   private initAutocomplete() {
     return this.patientInput.valueChanges.pipe(
       startWith(''),
-      switchMap((textValue) =>
-        textValue ? this.filterPatients(textValue) : this.patients$
-      )
+      switchMap((value) => {
+        const name = typeof value === 'string' ? value : null;
+        return name ? this.filterPatients(name) : this.patients$;
+      })
     );
   }
   private filterPatients(value: string): Observable<Patient[]> {
