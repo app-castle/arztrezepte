@@ -41,6 +41,7 @@ export class DoctorComponent {
   public recipe: Recipe = {
     Date: new Date().toISOString(),
     DoctorName: 'Dr. Bernard Häcker',
+    DoctorAddress: 'Digiweg 97, 3005 Bern',
     Evening: false,
     Lunch: false,
     Morning: false,
