@@ -1,11 +1,13 @@
+import { Timestamp } from '@angular/fire/firestore';
+
 export interface Recipe {
   id: string;
-  Date: string;
+  Date: Timestamp;
   DoctorName: string;
   DoctorAddress: string;
   PatientId: string;
   MedicationId: string;
-  ValidTo: string;
+  ValidTo: Timestamp;
   Count: string;
   Used: boolean;
   Morning: boolean;

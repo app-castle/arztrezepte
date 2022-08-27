@@ -1,5 +1,7 @@
 <mat-card>
-  <mat-card-title>{{recipe.medication.Name}}</mat-card-title>
-  <mat-card-subtitle>Rezept vom {{recipe.Date}}</mat-card-subtitle>
-  <span>{{recipe.DoctorName}}</span>
+  <mat-card-title>{{ recipe.medication.Name }}</mat-card-title>
+  <mat-card-subtitle>
+    Rezept vom {{ recipe.Date.toDate() | date: 'dd.MM.YYYY' }} |
+    {{ recipe.DoctorName }}
+  </mat-card-subtitle>
 </mat-card>

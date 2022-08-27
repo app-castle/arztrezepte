@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Timestamp } from '@angular/fire/firestore';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   MatAutocompleteModule,
@@ -39,7 +40,7 @@ import { RecipeService } from '../shared/recipe.service';
 })
 export class DoctorComponent {
   public recipe: Recipe = {
-    Date: new Date().toISOString(),
+    Date: Timestamp.now(),
     DoctorName: 'Dr. Bernard Häcker',
     DoctorAddress: 'Digiweg 97, 3005 Bern',
     Evening: false,
@@ -139,8 +140,8 @@ export class DoctorComponent {
     const validTo = new Date();
     validTo.setFullYear(validTo.getFullYear() + 1);
     val
-      ? (this.recipe.ValidTo = validTo.toISOString())
-      : (this.recipe.ValidTo = '');
+      ? (this.recipe.ValidTo = Timestamp.fromDate(validTo))
+      : delete (this.recipe as any).ValidTo;
   }
 
   public async onSave(): Promise<void> {

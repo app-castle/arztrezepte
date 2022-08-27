@@ -12,7 +12,7 @@
 
     <dl>
       <dt>Ausstellungsdatum</dt>
-      <dd>{{ recipe.Date }}</dd>
+      <dd>{{ recipe.Date.toDate() | date: 'dd.MM.YYYY' }}</dd>
 
       <dt>Gültig bis</dt>
       <dd>
@@ -20,7 +20,7 @@
           [matBadge]="isValid(recipe.ValidTo) ? '✓' : 'X'"
           [matBadgeColor]="isValid(recipe.ValidTo) ? 'primary' : 'warn'"
         >
-          {{ recipe.ValidTo }}
+          {{ recipe?.ValidTo?.toDate() | date: 'dd.MM.YYYY' }}
         </span>
       </dd>
     </dl>

@@ -13,6 +13,7 @@ import { Patient } from '../../shared/patient.models';
 import { Recipe } from '../../shared/recipe.models';
 import { PatientToolbarService } from '../patient-toolbar.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { Timestamp } from '@angular/fire/firestore';
 
 @Component({
   selector: 'bh-patient-recipe-detail',
@@ -50,9 +51,7 @@ export class PatientRecipeDetailComponent implements OnDestroy {
     this.toolbarService.setBacklinkState(false);
   }
 
-  isValid(date: string) {
-    const today = new Date();
-    const validTo = new Date(date);
-    return validTo > today;
+  isValid(date: Timestamp) {
+    return date > Timestamp.now();
   }
 }
