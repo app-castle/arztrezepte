@@ -36,8 +36,6 @@ export class PatientComponent {
       map((data) => data['patient']),
       filter((patient) => patient)
     );
-
-    this.toolbarService.hasBacklink$.subscribe((x) => console.log(x));
   }
 
   public navigateBack() {
