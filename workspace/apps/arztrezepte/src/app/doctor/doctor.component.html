@@ -1,6 +1,7 @@
 <mat-card class="card" routerLink="patient">
   <mat-card-title class="card-title">
-    <mat-icon>receipt</mat-icon>Rezept ausstellen</mat-card-title>
+    <mat-icon>receipt</mat-icon>Rezept ausstellen</mat-card-title
+  >
   <mat-card-content class="center">
     <!-- patient selector -->
     <mat-form-field class="full-width spacer-top" appearance="fill">
@@ -81,6 +82,8 @@
 
   <mat-card-actions align="end">
     <button mat-button (click)="onPrint()">DRUCKEN</button>
-    <button mat-button (click)="onSave()">AUSSTELLEN</button>
+    <button mat-raised-button color="primary" (click)="onSave()">
+      AUSSTELLEN
+    </button>
   </mat-card-actions>
 </mat-card>

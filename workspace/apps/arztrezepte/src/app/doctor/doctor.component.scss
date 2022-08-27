@@ -1,10 +1,8 @@
 :host {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
+  display: grid;
+  place-items: center;
   height: 100%;
-  background-color: mediumspringgreen;
+  background-color: #fafafa;
 }
 
 .card {
@@ -18,10 +16,10 @@
 }
 
 .spacer-top {
-    margin-top: 24px;
+  margin-top: 24px;
 }
 
 .time {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
 }
