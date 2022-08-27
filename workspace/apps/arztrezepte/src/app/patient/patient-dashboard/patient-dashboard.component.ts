@@ -24,7 +24,7 @@ export class PatientDashboardComponent {
       map((data) => data['patient'] as Patient),
       filter((patient) => !!patient),
       switchMap((patient) => recipeService.getAllOfPatient(patient.id)),
-      map((recipes) => recipes[0])
+      map((recipes) => recipes.reverse()?.[0])
     );
   }
 }
