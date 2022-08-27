@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
 import {
-  AngularFirestoreCollection,
   AngularFirestore,
+  AngularFirestoreCollection,
 } from '@angular/fire/compat/firestore';
-import { map, Observable } from 'rxjs';
+import { forkJoin, map, Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { MedicationService } from './medication.service';
 import { Recipe } from './recipe.models';
 
 @Injectable({ providedIn: 'root' })
 export class RecipeService {
   private ref: AngularFirestoreCollection<Recipe>;
 
-  constructor(afs: AngularFirestore) {
+  constructor(afs: AngularFirestore, private medsService: MedicationService) {
     this.ref = afs.collection('Recipes');
   }
 
@@ -25,15 +27,33 @@ export class RecipeService {
     );
   }
 
+  getAllOfPatient(patientId: string) {
+    return this.getAll().pipe(
+      map((recipes) => recipes.filter((r) => r.PatientId === patientId)),
+      switchMap((recipes) =>
+        forkJoin(
+          recipes.map((r) =>
+            this.medsService
+              .get(r.MedicationId)
+              .pipe(map((med) => ({ ...r, medication: med })))
+          )
+        )
+      )
+    );
+  }
+
   get(id: string) {
     return this.ref
       .doc(id)
       .get()
       .pipe(
-        map((doc) => ({
-          ...doc.data(),
-          id: doc.id,
-        }))
+        map(
+          (doc) =>
+            ({
+              ...doc.data(),
+              id: doc.id,
+            } as Recipe)
+        )
       );
   }
 
