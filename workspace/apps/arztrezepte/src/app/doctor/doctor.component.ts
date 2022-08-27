@@ -145,4 +145,8 @@ export class DoctorComponent {
   public async onSave(): Promise<void> {
     await this.recipeService.create(this.recipe);
   }
+
+  public onPrint(): void {
+    alert('Kein Drucker erkannt!');
+  }
 }
