@@ -1,0 +1,31 @@
+on: push
+name: 🚀 Deploy website on push
+jobs:
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./workspace
+    steps:
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v2
+
+    - name: Use Node.js 14
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+      
+    - name: 🔨 Build Project
+      run: |
+        npm ci
+        npm run build
+    
+    - name: 📂 Sync files
+      uses: SamKirkland/FTP-Deploy-Action@4.3.1
+      with:
+        server: lx35.hoststar.hosting
+        username: rezepte.appcastle.ch
+        password: Init_12345
+        protocol: ftps
+        port: 5544
