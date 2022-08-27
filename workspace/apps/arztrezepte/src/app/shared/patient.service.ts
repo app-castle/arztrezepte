@@ -3,7 +3,7 @@ import {
   AngularFirestoreCollection,
   AngularFirestore,
 } from '@angular/fire/compat/firestore';
-import { map } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Patient } from './patient.models';
 
 @Injectable({ providedIn: 'root' })
@@ -14,7 +14,7 @@ export class PatientService {
     this.ref = afs.collection('Patients');
   }
 
-  getAll() {
+  getAll(): Observable<Patient[]> {
     return this.ref.snapshotChanges().pipe(
       map((changes) =>
         changes.map((change) => ({

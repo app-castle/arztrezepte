@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Patient } from './patient.models';
-import { PatientService } from './patient.service';
+import { PatientService } from '../shared/patient.service';
+
 
 @Component({
   selector: 'bh-patient',
@@ -13,9 +12,9 @@ import { PatientService } from './patient.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PatientComponent {
-  public patients$: Observable<Patient[]>;
+
 
   constructor(private patientService: PatientService) {
-    this.patients$ = this.patientService.getAll();
+  
   }
 }

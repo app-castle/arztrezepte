@@ -1,1 +1,18 @@
-<p>doctor works!</p>
+
+
+<h1>Rezept ausstellen</h1>
+<mat-form-field appearance="fill">
+  <input
+    matInput
+    aria-label="State"
+    [matAutocomplete]="auto"
+    [formControl]="patientInput"
+  />
+  <mat-autocomplete #auto="matAutocomplete">
+    <mat-option *ngFor="let patient of filteredPatients$ | async" [value]="patient.AHV">
+      <span>{{ patient.Firstname }} </span>
+      <span>{{ patient.Firstname }} </span> |
+      <small>{{ patient.Birthday }}</small>
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

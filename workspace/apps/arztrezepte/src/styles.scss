@@ -2,12 +2,18 @@
 
 $icon-xl: 64px;
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
 
 .icon-l {
-    font-size: $icon-xl;
-    line-height: $icon-xl;
-    height: $icon-xl !important;
-    width: $icon-xl !important;
+  font-size: $icon-xl;
+  line-height: $icon-xl;
+  height: $icon-xl !important;
+  width: $icon-xl !important;
 }
