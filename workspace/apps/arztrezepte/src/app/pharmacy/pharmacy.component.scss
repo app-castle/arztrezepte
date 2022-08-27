@@ -1,7 +1,12 @@
 :host {
     display: flex;
-    }
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background-color: mediumspringgreen;
+}
     
-    .card {
-        
-    }
+.card {
+    height: fit-content;
+}
+      

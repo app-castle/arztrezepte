@@ -1,18 +1,41 @@
+<mat-card class="card" routerLink="pharmacy">
+  <mat-card-title class="card-title">
+    <mat-icon>local_pharmacy</mat-icon>Rezept einlösen</mat-card-title>
+    <mat-card-content class="center">
+      <!-- selected recipe -->
+      <ng-container *ngIf="recipe$ | async as selectedRecipe">
 
+        <mat-toolbar>
+          <span>{{selectedRecipe.patient.Firstname}} {{selectedRecipe.patient.Lastname}}</span>
+        </mat-toolbar>
+          <span>Geburtstag: {{selectedRecipe.patient.Birthday}}</span>
+          <div>AHV Nr: {{selectedRecipe.patient.AHV}}</div>
+          <div>Karten Nr: {{selectedRecipe.patient.Cardnumber}}</div>
+          <div>Geschlecht: {{selectedRecipe.patient.Gender}}</div>
+        <mat-toolbar>
+          <div>{{selectedRecipe.DoctorName}}</div>
+        </mat-toolbar>
+          <div>Adresse: {{selectedRecipe.DoctorAddress}}</div>
+        <mat-toolbar>
+          <div>{{selectedRecipe.medication.Name}}</div>
+        </mat-toolbar>       
+          <div>{{selectedRecipe.medication.Type}}</div>
+          <div>Ausstellungsdatum: {{selectedRecipe.Date}}</div>
 
-<h1>Rezept einlösen</h1>
-<mat-form-field appearance="fill">
-  <input
-    matInput
-    aria-label="State"
-    [matAutocomplete]="auto"
-    [formControl]="recipeInput"
-  />
-  <mat-autocomplete #auto="matAutocomplete">
-    <mat-option *ngFor="let recipe of filteredRecipes$ | async" [value]="recipe.DoctorName">
-      <span>{{ recipe.DoctorName }} </span>
-      <span>{{ recipe.Date }} </span> |
-      <small>{{ recipe.ValidTo }}</small>
-    </mat-option>
-  </mat-autocomplete>
-</mat-form-field>
+          <section class="time spacer-top">
+            <mat-checkbox (click)="$event.preventDefault()" [(ngModel)]="selectedRecipe.Morning">Morgens</mat-checkbox>
+            <mat-checkbox (click)="$event.preventDefault()" [(ngModel)]="selectedRecipe.Lunch">Mittags</mat-checkbox>
+            <mat-checkbox (click)="$event.preventDefault()" [(ngModel)]="selectedRecipe.Evening">Abends</mat-checkbox>
+          </section>
+
+          <div>Firma: {{selectedRecipe.medication.Company}}</div>
+          <div>Gültig bis: {{selectedRecipe.ValidTo}}</div>
+          <mat-card-actions align="end">
+            <button mat-button (click)="onSave(selectedRecipe)">EINLÖSEN</button>
+          </mat-card-actions>
+      </ng-container>
+
+    </mat-card-content>
+
+  </mat-card>
+  

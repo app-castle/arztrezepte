@@ -36,9 +36,9 @@ bootstrapApplication(AppComponent, {
         },
         {
           path: 'pharmacy',
-          loadComponent: () =>
-            import('./app/pharmacy/pharmacy.component').then(
-              (mod) => mod.PharmacyComponent
+          loadChildren: () =>
+            import('./app/pharmacy/pharmacy.routes').then(
+              (mod) => mod.PHARMACY_ROUTING
             ),
         },
       ]),
