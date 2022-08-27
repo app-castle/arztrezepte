@@ -9,18 +9,18 @@
           <span>{{selectedRecipe.patient.Firstname}} {{selectedRecipe.patient.Lastname}}</span>
         </mat-toolbar>
           <span>Geburtstag: {{selectedRecipe.patient.Birthday}}</span>
-          <div>AHV Nr: {{selectedRecipe.patient.AHV}}</div>
-          <div>Karten Nr: {{selectedRecipe.patient.Cardnumber}}</div>
-          <div>Geschlecht: {{selectedRecipe.patient.Gender}}</div>
+          <span>AHV Nr: {{selectedRecipe.patient.AHV}}</span>
+          <span>Karten Nr: {{selectedRecipe.patient.Cardnumber}}</span>
+          <span>Geschlecht: {{selectedRecipe.patient.Gender}}</span>
         <mat-toolbar>
-          <div>{{selectedRecipe.DoctorName}}</div>
+          <span>{{selectedRecipe.DoctorName}}</span>
         </mat-toolbar>
-          <div>Adresse: {{selectedRecipe.DoctorAddress}}</div>
+          <span>Adresse: {{selectedRecipe.DoctorAddress}}</span>
         <mat-toolbar>
-          <div>{{selectedRecipe.medication.Name}}</div>
+          <span>{{selectedRecipe.medication.Name}}</span>
         </mat-toolbar>       
-          <div>{{selectedRecipe.medication.Type}}</div>
-          <div>Ausstellungsdatum: {{selectedRecipe.Date}}</div>
+          <span>{{selectedRecipe.medication.Type}}</span>
+          <span>Ausstellungsdatum: {{selectedRecipe.Date}}</span>
 
           <section class="time spacer-top">
             <mat-checkbox (click)="$event.preventDefault()" [(ngModel)]="selectedRecipe.Morning">Morgens</mat-checkbox>
@@ -28,10 +28,16 @@
             <mat-checkbox (click)="$event.preventDefault()" [(ngModel)]="selectedRecipe.Evening">Abends</mat-checkbox>
           </section>
 
-          <div>Firma: {{selectedRecipe.medication.Company}}</div>
-          <div>Gültig bis: {{selectedRecipe.ValidTo}}</div>
-          <mat-card-actions align="end">
+          <span>Firma: {{selectedRecipe.medication.Company}}</span>
+          <span>Gültig bis: {{selectedRecipe.ValidTo}}</span>
+          <mat-card-actions align="end" *ngIf="!selectedRecipe.Used">
+            <mat-icon>task</mat-icon>
             <button mat-button (click)="onSave(selectedRecipe)">EINLÖSEN</button>
+          </mat-card-actions>
+
+          <mat-card-actions align="end" *ngIf="selectedRecipe.Used">
+           <mat-icon>task</mat-icon>
+            <span>Bereits einglöst</span>
           </mat-card-actions>
       </ng-container>
 
