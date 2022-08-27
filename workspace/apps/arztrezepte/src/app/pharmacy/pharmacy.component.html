@@ -1,58 +1,98 @@
-<mat-card class="card" routerLink="pharmacy">
-  <mat-card-title class="card-title">
-    <mat-icon>local_pharmacy</mat-icon>Rezept einlösen</mat-card-title
-  >
-  <mat-card-content class="center">
+<mat-card>
+  <mat-card-title>
+    <mat-icon>local_pharmacy</mat-icon>Rezept einlösen
+  </mat-card-title>
+  <mat-card-content>
     <!-- selected recipe -->
-    <ng-container *ngIf="recipe">
-      <mat-toolbar>
-        <span
-          >{{ recipe.patient.Firstname }} {{ recipe.patient.Lastname }}</span
-        >
-      </mat-toolbar>
-      <span>Geburtstag: {{ recipe.patient.Birthday }}</span>
-      <span>AHV Nr: {{ recipe.patient.AHV }}</span>
-      <span>Karten Nr: {{ recipe.patient.Cardnumber }}</span>
-      <span>Geschlecht: {{ recipe.patient.Gender }}</span>
-      <mat-toolbar>
-        <span>{{ recipe.DoctorName }}</span>
-      </mat-toolbar>
-      <span>Adresse: {{ recipe.DoctorAddress }}</span>
-      <mat-toolbar>
-        <span>{{ recipe.medication.Name }}</span>
-      </mat-toolbar>
-      <span>{{ recipe.medication.Type }}</span>
-      <span>Ausstellungsdatum: {{ recipe.Date }}</span>
+    <div class="recipe" *ngIf="recipe">
+      <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title
+            >{{ recipe.patient.Firstname }}
+            {{ recipe.patient.Lastname }}</mat-panel-title
+          >
+          <mat-panel-description>Patient</mat-panel-description>
+        </mat-expansion-panel-header>
 
-      <section class="time spacer-top">
-        <mat-checkbox
-          (click)="$event.preventDefault()"
-          [(ngModel)]="recipe.Morning"
-          >Morgens</mat-checkbox
-        >
-        <mat-checkbox
-          (click)="$event.preventDefault()"
-          [(ngModel)]="recipe.Lunch"
-          >Mittags</mat-checkbox
-        >
-        <mat-checkbox
-          (click)="$event.preventDefault()"
-          [(ngModel)]="recipe.Evening"
-          >Abends</mat-checkbox
-        >
-      </section>
+        <dl>
+          <dt>Geburtstag</dt>
+          <dd>{{ recipe.patient.Birthday }}</dd>
+          <dt>Geschlecht</dt>
+          <dd>{{ recipe.patient.Gender }}</dd>
+          <dt>AHV</dt>
+          <dd>{{ recipe.patient.AHV }}</dd>
+          <dt>Karten Nr.</dt>
+          <dd>{{ recipe.patient.Cardnumber }}</dd>
+        </dl>
+      </mat-expansion-panel>
 
-      <span>Firma: {{ recipe.medication.Company }}</span>
-      <span>Gültig bis: {{ recipe.ValidTo }}</span>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>{{ recipe.DoctorName }}</mat-panel-title>
+          <mat-panel-description>Arzt</mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <dl>
+          <dt>Adresse</dt>
+          <dd>{{ recipe.DoctorAddress }}</dd>
+        </dl>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title>{{ recipe.medication.Name }}</mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <dl>
+          <dt>Typ</dt>
+          <dd>{{ recipe.medication.Type }}</dd>
+
+          <dt>Firma</dt>
+          <dd>{{ recipe.medication.Company }}</dd>
+
+          <dt>Ausstellungsdatum</dt>
+          <dd>{{ recipe.Date.toDate() | date: 'dd.MM.YYYY' }}</dd>
+
+          <dt>Gültig bis</dt>
+          <dd>{{ recipe.ValidTo.toDate() | date: 'dd.MM.YYYY' }}</dd>
+
+          <dt>Dosierung</dt>
+          <dd class="dosis">
+            <mat-checkbox
+              (click)="$event.preventDefault()"
+              [checked]="recipe.Morning"
+              disabled
+              >Morgens</mat-checkbox
+            >
+            <mat-checkbox
+              (click)="$event.preventDefault()"
+              [checked]="recipe.Lunch"
+              disabled
+              >Mittags</mat-checkbox
+            >
+            <mat-checkbox
+              (click)="$event.preventDefault()"
+              [checked]="recipe.Evening"
+              disabled
+              >Abends</mat-checkbox
+            >
+          </dd>
+        </dl>
+      </mat-expansion-panel>
+
       <mat-card-actions align="end" *ngIf="!recipe.Used">
-        <mat-icon>task</mat-icon>
-        <button mat-button (click)="onSave()">EINLÖSEN</button>
+        <button mat-raised-button color="primary" (click)="onSave()">
+          <mat-icon>task</mat-icon>
+          <span>EINLÖSEN</span>
+        </button>
       </mat-card-actions>
 
       <mat-card-actions align="end" *ngIf="recipe.Used">
-        <mat-icon>task</mat-icon>
-        <span>Bereits einglöst</span>
+        <button mat-raised-button disabled>
+          <mat-icon>task</mat-icon>
+          <span>Bereits einglöst</span>
+        </button>
       </mat-card-actions>
-    </ng-container>
+    </div>
   </mat-card-content>
 </mat-card>

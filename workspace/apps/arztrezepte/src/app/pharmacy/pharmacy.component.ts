@@ -12,6 +12,7 @@ import { Medication } from '../shared/medication.models';
 import { Patient } from '../shared/patient.models';
 import { Recipe } from '../shared/recipe.models';
 import { RecipeService } from '../shared/recipe.service';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 type RecipeModel = Recipe & { medication: Medication; patient: Patient };
 
@@ -28,6 +29,7 @@ type RecipeModel = Recipe & { medication: Medication; patient: Patient };
     MatButtonModule,
     MatIconModule,
     MatCheckboxModule,
+    MatExpansionModule,
   ],
   templateUrl: './pharmacy.component.html',
   styleUrls: ['./pharmacy.component.scss'],
