@@ -5,6 +5,7 @@ import { PatientResolver } from './patient.resolver';
 import { PatientListComponent } from './patient-list/patient-list.component';
 import { PatientRecipeDetailComponent } from './patient-recipe-detail/patient-recipe-detail.component';
 import { RecipeResolver } from './recipe.resolver';
+import { PatientDashboardComponent } from './patient-dashboard/patient-dashboard.component';
 
 export const PATIENT_ROUTING: Routes = [
   {
@@ -14,6 +15,11 @@ export const PATIENT_ROUTING: Routes = [
       patient: PatientResolver,
     },
     children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        component: PatientDashboardComponent,
+      },
       {
         path: 'recepies',
         component: RecipeListComponent,

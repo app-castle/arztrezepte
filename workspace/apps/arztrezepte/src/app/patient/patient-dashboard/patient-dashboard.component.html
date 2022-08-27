@@ -1,0 +1,22 @@
+<section *ngIf="latestRecipe$ | async as recipe">
+  <h2>Neustes Rezept</h2>
+  <a routerLink="recipe/{{recipe.id}}">
+    <bh-recipe-card [recipe]="recipe"></bh-recipe-card>
+  </a>
+</section>
+
+<section>
+  <h2>Nächste Apotheke</h2>
+  <img src="assets/googlemaps.JPG" alt="Google Maps">
+  <address>
+    <strong>Amavita Apotheke Volz</strong><br>
+    Zytgloggelaube 2, 3011 Bern
+  </address>
+  <span>noch bis 17:30 geöffnet</span>
+</section>
+
+<ng-template #noRecipe>
+  <section>
+    <p>Du hast im Moment kein verfügbares Arztrezept.</p>
+  </section>
+</ng-template>
