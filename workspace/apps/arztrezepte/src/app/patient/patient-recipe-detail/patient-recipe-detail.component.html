@@ -1,5 +1,8 @@
-<!-- {{recipe$ | async | json}} -->
 
 <ng-container *ngIf="recipe$ | async as recipe">
   <h1>{{recipe.medication.Name}}</h1>
+
+  <qrcode qrdata="https://appcastle.ch" [width]="1000"></qrcode>
 </ng-container>
+
+{{recipe$ | async | json}}
