@@ -6,11 +6,12 @@ import { Patient } from '../../shared/patient.models';
 import { Medication } from '../../shared/medication.models';
 import { map, filter } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
+import { QRCodeModule } from 'angularx-qrcode';
 
 @Component({
   selector: 'bh-patient-recipe-detail',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, QRCodeModule],
   templateUrl: './patient-recipe-detail.component.html',
   styleUrls: ['./patient-recipe-detail.component.scss'],
 })
