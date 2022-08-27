@@ -1,1 +1,18 @@
-<p>pharmacy works!</p>
+
+
+<h1>Rezept einlösen</h1>
+<mat-form-field appearance="fill">
+  <input
+    matInput
+    aria-label="State"
+    [matAutocomplete]="auto"
+    [formControl]="recipeInput"
+  />
+  <mat-autocomplete #auto="matAutocomplete">
+    <mat-option *ngFor="let recipe of filteredRecipes$ | async" [value]="recipe.DoctorName">
+      <span>{{ recipe.DoctorName }} </span>
+      <span>{{ recipe.Date }} </span> |
+      <small>{{ recipe.ValidTo }}</small>
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
