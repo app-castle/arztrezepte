@@ -1,0 +1,5 @@
+<!-- {{recipe$ | async | json}} -->
+
+<ng-container *ngIf="recipe$ | async as recipe">
+  <h1>{{recipe.medication.Name}}</h1>
+</ng-container>

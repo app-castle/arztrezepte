@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import { filter, switchMap } from 'rxjs/operators';
 import { Medication } from '../../shared/medication.models';
@@ -14,7 +14,13 @@ import { RecipeService } from '../../shared/recipe.service';
 @Component({
   selector: 'bh-recipe-list',
   standalone: true,
-  imports: [CommonModule, MatListModule, MatCardModule, RecipeCardComponent],
+  imports: [
+    CommonModule,
+    MatListModule,
+    MatCardModule,
+    RecipeCardComponent,
+    RouterModule,
+  ],
   templateUrl: './recipe-list.component.html',
   styleUrls: ['./recipe-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
