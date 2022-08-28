@@ -1,0 +1,12 @@
+<ul>
+  <li *ngFor="let patient of list$ | async">
+    <span>{{ patient.Firstname }} {{ patient.Lastname }}</span>
+    <ul>
+      <li *ngFor="let recipe of patient.recipes">
+        <a routerLink="{{ recipe.id }}">
+          {{ recipe.id }}
+        </a>
+      </li>
+    </ul>
+  </li>
+</ul>

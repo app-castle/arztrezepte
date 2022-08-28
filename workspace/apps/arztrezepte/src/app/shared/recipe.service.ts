@@ -15,8 +15,11 @@ import { Patient } from './patient.models';
 export class RecipeService {
   private ref: AngularFirestoreCollection<Recipe>;
 
-  constructor(afs: AngularFirestore, private medsService: MedicationService,
-    private patsService: PatientService) {
+  constructor(
+    afs: AngularFirestore,
+    private medsService: MedicationService,
+    private patsService: PatientService
+  ) {
     this.ref = afs.collection('Recipes');
   }
 
@@ -32,6 +35,7 @@ export class RecipeService {
   }
 
   getAllOfPatient(patientId: string) {
+    console.log('getting', patientId);
     return this.getAll().pipe(
       map((recipes) => recipes.filter((r) => r.PatientId === patientId)),
       switchMap((recipes) =>
@@ -45,16 +49,16 @@ export class RecipeService {
       )
     );
   }
-  
+
   getCompleteRecipe(recipeId: string) {
     return this.get(recipeId).pipe(
-      switchMap((recipe) => 
-        forkJoin(
-          [
-            this.medsService.get(recipe.MedicationId),
-            this.patsService.get(recipe.PatientId)
-          ]
-        ).pipe(map(([medication, patient]) => ({...recipe, medication, patient})))
+      switchMap((recipe) =>
+        forkJoin([
+          this.medsService.get(recipe.MedicationId),
+          this.patsService.get(recipe.PatientId),
+        ]).pipe(
+          map(([medication, patient]) => ({ ...recipe, medication, patient }))
+        )
       )
     );
   }
@@ -79,7 +83,10 @@ export class RecipeService {
     return this.ref.add({ ...payload } as Recipe);
   }
 
-  update(id: string, payload: Partial<Recipe & { medication: Medication, patient: Patient }>) {
+  update(
+    id: string,
+    payload: Partial<Recipe & { medication: Medication; patient: Patient }>
+  ) {
     delete payload.id;
     delete payload.patient;
     delete payload.medication;
