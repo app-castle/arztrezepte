@@ -4,7 +4,7 @@
 
 ## Digitale Arzt Rezepte
 
-Siehe Doku.
+[PDF with more information about this solution](./Digitale%20Arztrezepte%20-%20inova%20h4ck0rz.pdf)
 
 ### Development server
 
